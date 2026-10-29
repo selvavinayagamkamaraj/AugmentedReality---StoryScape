@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fredoka:wght@500;600;700&display=swap');
+
+:root {
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-child: 'Fredoka', 'Plus Jakarta Sans', cursive, sans-serif;
+  
+  --bg-dark: #090d16;
+  --card-bg: rgba(20, 27, 45, 0.75);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-hover: rgba(30, 41, 69, 0.85);
+
+  --accent-sky: #38bdf8;
+  --accent-purple: #a855f7;
+  --accent-pink: #f43f5e;
+  --accent-green: #22c55e;
+  --accent-amber: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: var(--bg-dark);
+  color: #f1f5f9;
+  font-family: var(--font-main);
+  user-select: none;
+}
+
+/* WebXR Transparency: Never obscure the camera pass-through */
+html:has([data-mode="webxr"]),
+body:has([data-mode="webxr"]),
+#root:has([data-mode="webxr"]),
+body.in-webxr,
+body.in-webxr #root,
+body.in-webxr html {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+input, textarea, select, button {
+  font-family: inherit;
+}
+
+/* Animations */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes floatBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 12s linear infinite;
+}
+
+.animate-float {
+  animation: floatBob 3s ease-in-out infinite;
+}

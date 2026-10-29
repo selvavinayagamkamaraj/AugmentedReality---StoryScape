@@ -1,0 +1,17 @@
+import {parseStory, normalizeStory} from '../src/ai/semanticStory.ts';
+import assert from 'node:assert/strict';
+export const acceptance = "A small orange cat walks across the floor, jumps onto the wooden table, sees a red apple, walks toward it, eats it and says 'This is delicious!' Then a blue bird flies into the room and sits on the chair.";
+const story = parseStory(acceptance);
+console.log(JSON.stringify(story, null, 2));
+assert.deepEqual(story.characters.map(c => c.type), ['cat', 'bird']);
+assert.deepEqual(story.objects.map(o => o.id), ['table', 'apple', 'chair']);
+assert.deepEqual(story.scenes.flatMap(s => s.actions.map(a => a.action)), ['walk','jump','look','walk','eat','talk','fly','sit']);
+assert.equal(story.objects.find(o => o.id === 'apple').surfaceAnchor, 'table');
+assert.equal(story.scenes[4].actions[0].targetObjectId, 'apple');
+assert.equal(story.scenes[5].dialogue[0].text, 'This is delicious!');
+assert.equal(story.scenes[6].actions[0].characterId, 'bird');
+assert.deepEqual(normalizeStory(story).objects.map(o => o.id), ['table','apple','chair']);
+const unknown = parseStory('A robot picks up a magic crystal and sees a dragon fruit beside a quantum gizmo.');
+assert(unknown.objects.some(o => o.name === 'quantum gizmo'));
+assert(unknown.objects.some(o => o.name === 'dragon fruit'));
+console.log('Semantic acceptance passed');
